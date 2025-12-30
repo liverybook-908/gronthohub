@@ -175,20 +175,29 @@ class FirebaseManager:
         return cls._instance
     
     def _initialize(self):
-        """Firebase initialization"""
+        """Firebase initialization - Fix for Certificate Error"""
         try:
-            with open("firebase-key.json", "w", encoding='utf-8') as f:
-                f.write(Config.FIREBASE_KEYS_JSON)
+            # গিটহাব সিক্রেট থেকে ডাটা নেওয়া
+            firebase_raw = os.getenv("FIREBASE_KEYS")
             
+            if not firebase_raw:
+                logger.error("❌ FIREBASE_KEYS এনভায়রনমেন্ট ভেরিয়েবল খুঁজে পাওয়া যায়নি!")
+                return
+
+            # স্ট্রিং থেকে ডিকশনারিতে কনভার্ট করা
+            key_data = json.loads(firebase_raw)
+
             if not firebase_admin._apps:
-                cred = credentials.Certificate("firebase-key.json")
+                # সরাসরি ডিকশনারি ব্যবহার করে ফায়ারবেস কানেক্ট করা (ফাইলের দরকার নেই)
+                cred = credentials.Certificate(key_data)
                 firebase_admin.initialize_app(cred)
             
             self.db = firestore.client()
             logger.info("✅ Firebase সফলভাবে কানেক্ট হয়েছে")
+        except json.JSONDecodeError:
+            logger.error("❌ FIREBASE_KEYS এর ফরম্যাট সঠিক নয় (JSON Error)!")
         except Exception as e:
             logger.error(f"❌ Firebase initialization error: {e}")
-            raise
     
     def get_processed_book_ids(self) -> List[str]:
         """ডাটাবেজ থেকে প্রসেসড বই আইডি নেওয়া"""
@@ -480,4 +489,5 @@ if __name__ == "__main__":
         logger.info("⏸️  ব্যবহারকারী দ্বারা বন্ধ করা হয়েছে")
     except Exception as e:
         logger.critical(f"💥 Program crashed: {e}", exc_info=True)
+
         exit(1)
