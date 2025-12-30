@@ -150,7 +150,7 @@ class Config:
     PUBLISH_DELAY_MAX_HOURS = 12
     
     # Gemini Model Selection
-    GEMINI_MODEL = "gemini-exp-1206","Gemini 3 Pro Preview"  # Latest experimental model
+    GEMINI_MODEL = "gemini-exp-1206"  # Latest experimental model
     # অন্যান্য অপশন: "gemini-2.0-flash-exp", "gemini-1.5-pro"
     
     @classmethod
@@ -493,6 +493,7 @@ if __name__ == "__main__":
         logger.critical(f"💥 Program crashed: {e}", exc_info=True)
 
         exit(1)
+
 
 
 
