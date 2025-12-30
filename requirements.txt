@@ -1,6 +1,6 @@
-firebase-admin
 google-generativeai
 internetarchive
+firebase-admin
 requests
-urllib3
+tenacity
 google-auth
