@@ -47,12 +47,12 @@ jobs:
           echo "🛠️ Starting Database Fixer..."
           python fixer.py
 
-      - name: 🚀 Run Promotor
+      - name: 🚀 Run Promoter
         env:
           FIREBASE_KEYS: ${{ secrets.FIREBASE_KEYS }}
           SITE_URL: "https://your-site.web.app"
           SITE_NAME: "বইঘর"
-        run: python promotor.py
+        run: python promoter.py
 
       - name: 📤 Commit & Push Changes
         run: |
