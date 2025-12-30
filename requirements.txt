@@ -1,0 +1,6 @@
+firebase-admin
+google-generativeai
+internetarchive
+requests
+urllib3
+google-auth
