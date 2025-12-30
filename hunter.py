@@ -247,7 +247,7 @@ class ArchiveFetcher:
         found_books = []
         
         try:
-            results = search_items(query, sort=['downloads desc'])
+            results = search_items(query)
             firebase_manager = FirebaseManager()
             processed_ids = firebase_manager.get_processed_book_ids()
             
@@ -491,4 +491,5 @@ if __name__ == "__main__":
         logger.critical(f"💥 Program crashed: {e}", exc_info=True)
 
         exit(1)
+
 
