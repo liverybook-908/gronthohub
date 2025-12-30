@@ -1,3 +1,4 @@
+from google.api_core import exceptions
 import google.generativeai as genai
 import json
 import time
@@ -141,15 +142,15 @@ class SEOContent:
 class Config:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
     FIREBASE_KEYS_JSON = os.getenv("FIREBASE_KEYS")
-    MAX_BOOKS_PER_RUN = 3
+    MAX_BOOKS_PER_RUN = 2
     MIN_REVIEW_LENGTH = 300
     MAX_RETRIES = 3
-    RATE_LIMIT_DELAY = 10
+    RATE_LIMIT_DELAY = 30
     PUBLISH_DELAY_MIN_HOURS = 3
     PUBLISH_DELAY_MAX_HOURS = 12
     
     # Gemini Model Selection
-    GEMINI_MODEL = "gemini-exp-1206"  # Latest experimental model
+    GEMINI_MODEL = "gemini-exp-1206","Gemini 3 Pro Preview"  # Latest experimental model
     # অন্যান্য অপশন: "gemini-2.0-flash-exp", "gemini-1.5-pro"
     
     @classmethod
@@ -326,6 +327,7 @@ OUTPUT FORMAT (শুধুমাত্র JSON - কোনো markdown ব্�
 
         try:
             response = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             response_text = response.text.strip()
             
             # Markdown backticks রিমুভ
@@ -491,5 +493,6 @@ if __name__ == "__main__":
         logger.critical(f"💥 Program crashed: {e}", exc_info=True)
 
         exit(1)
+
 
 
