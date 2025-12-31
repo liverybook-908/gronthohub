@@ -244,11 +244,12 @@ class ArchiveFetcher:
         """Archive.org থেকে ট্রেন্ডিং বাংলা বই খোঁজা"""
         logger.info("🔍 Archive.org থেকে ট্রেন্ডিং বই খুঁজছি...")
         
-        query = 'language:bengali AND mediatype:texts'
+        query = 'subject:"Bengali" AND mediatype:texts'
         found_books = []
         
         try:
             results = search_items(query)
+            print(f"🔍 Archive.org-এ মোট বই পাওয়া গেছে: {results.num_found}")
             firebase_manager = FirebaseManager()
             processed_ids = firebase_manager.get_processed_book_ids()
             
@@ -493,6 +494,7 @@ if __name__ == "__main__":
         logger.critical(f"💥 Program crashed: {e}", exc_info=True)
 
         exit(1)
+
 
 
 
