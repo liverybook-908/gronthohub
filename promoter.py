@@ -238,7 +238,7 @@ def run_promotor():
         
         # শুধু পাবলিশড বই আনা (এবং যেগুলো শিডিউল টাইম পার হয়েছে)
         now = datetime.now()
-        docs = db.collection('books').where('status', '==', 'published').stream()
+        docs = db.collection('books').stream()
         
         books = []
         for doc in docs:
@@ -268,4 +268,5 @@ def run_promotor():
         logger.error(f"💥 Error: {e}")
 
 if __name__ == "__main__":
+
     run_promotor()
